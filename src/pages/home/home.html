@@ -1,14 +1,31 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title text-center>Bem Vindo ao BusEvolution</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <h1>Informe a linha que deseja procurar abaixo:</h1>
+  <ion-searchbar class="ser" (ionInput)="getbus($event)"></ion-searchbar>
+  <ion-list *ngFor="let b of bus">
+    <ion-item *ngIf="flag" color="secondary" class="ser">
+      <h1>
+        <ion-icon color="dark" ios="ios-bus" md="md-bus">
+          <label>{{b.linha}}</label>
+        </ion-icon>
+      </h1>
+      <button color="dark" ion-button item-end icon-only clear round (click)="buscar(b)">
+        <ion-icon ios="ios-search" md="md-search"> Buscar Linha</ion-icon>
+      </button>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="dark">
+    <ion-title text-center>Todos os direitos Reservados.</ion-title>
+  </ion-toolbar>
+</ion-footer>

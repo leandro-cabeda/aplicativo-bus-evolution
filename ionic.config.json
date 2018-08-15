@@ -1,5 +1,7 @@
 {
   "name": "bus_evolution",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "ionic-angular"
 }
