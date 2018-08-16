@@ -4,8 +4,8 @@ import { Onibus } from '../../models/Onibus';
 
 @Injectable()
 export class HttpServiceProvider {
-  //public url ="https://api-bus-evolution.herokuapp.com/api/buscalinhas";
-  //public url = "https://localhost:6000/api";
+  public url ="https://api-bus-evolution.herokuapp.com/api";
+  public url2 = "http://localhost:8080/api";
 
   constructor(public http: HttpClient) {
     
@@ -13,14 +13,16 @@ export class HttpServiceProvider {
 
   public listaTodos() {
     //return this.http.get<Onibus[]>(this.url + "/buscalinhas");
-    //return this.http.get<Onibus[]>("https://api-bus-evolution.herokuapp.com/api/buscalinhas");
-    return this.http.get<Onibus[]>("http://localhost:8080/api/buscalinhas");
+    
+    return this.http.get<Onibus[]>(this.url2+"/buscalinhas");
 
 
   }
 
-  public buscar(linha: String) {
+  public buscar(linha: string) {
     //return this.http.get<Onibus[]>(this.url+"/buscalinhas/"+linha);
+
+    return this.http.get<Onibus[]>(this.url2 + "/buscalinhas/"+linha);
 
   }
 

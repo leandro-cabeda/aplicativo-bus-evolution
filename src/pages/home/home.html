@@ -8,18 +8,23 @@
 </ion-header>
 
 <ion-content padding>
-  <h1>Informe a linha que deseja procurar abaixo:</h1>
+  <h1 text-center>Informe a linha que deseja:</h1>
   <ion-searchbar class="ser" (ionInput)="getbus($event)"></ion-searchbar>
-  <ion-list *ngFor="let b of bus">
-    <ion-item *ngIf="flag" color="secondary" class="ser">
+  <ion-list *ngFor="let b of bus2" text-center>
+    <ion-item *ngIf="flag" color="secondary" class="ser" text-wrap>
       <h1>
         <ion-icon color="dark" ios="ios-bus" md="md-bus">
-          <label>{{b.linha}}</label>
+          {{b.linha}}
         </ion-icon>
       </h1>
-      <button color="dark" ion-button item-end icon-only clear round (click)="buscar(b)">
-        <ion-icon ios="ios-search" md="md-search"> Buscar Linha</ion-icon>
+      <h2>
+      <button color="dark" ion-button round (click)="buscar(b)">
+        <ion-icon ios="ios-time" md="md-time">  Horarios</ion-icon>
       </button>
+      <button class="cor" ion-button round (click)="buscar(b)">
+        <ion-icon ios="ios-analytics" md="md-analytics">  Rota</ion-icon>
+      </button>
+      </h2>
     </ion-item>
   </ion-list>
 </ion-content>

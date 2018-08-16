@@ -10,32 +10,22 @@ import { HttpServiceProvider } from '../../providers/http-service/http-service';
 })
 export class HomePage {
   public bus: Onibus[];
+  public bus2:Onibus[];
   public flag=false;
 
-  constructor(public navCtrl: NavController, //private loadingCtrl: LoadingController, 
+  constructor(public navCtrl: NavController, 
     private alert: AlertController, private apibus:HttpServiceProvider) {
 
   }
 
   ionViewDidLoad() {
 
-    /*let loader = this.loadingCtrl.create({
-      content: "Buscando Linhas de Ônibus. Aguarde..."
-    });
-
-    loader.present();*/
-
     this.apibus.listaTodos()
       .subscribe((onibus) => {
         this.bus = onibus;
-
-       /* setTimeout(function () {
-          loader.dismiss();
-        }, 1000);*/
       },
       (err: HttpErrorResponse) => {
         console.log(err);
-        //loader.dismiss();
         this.alert.create({
           title: "Falha na conexão",
           subTitle:
@@ -49,28 +39,72 @@ export class HomePage {
 
 
   public getbus(ev: any) {
+
+    var acentos = {
+      a: /[\xE0-\xE6]/g,
+      A: /[\xC0-\xC6]/g,
+      e: /[\xE8-\xEB]/g,
+      E: /[\xC8-\xCB]/g,
+      i: /[\xEC-\xEF]/g,
+      I: /[\xCC-\xCF]/g,
+      o: /[\xF2-\xF6]/g,
+      O: /[\xD2-\xD6]/g,
+      u: /[\xF9-\xFC]/g,
+      U: /[\xD9-\xDC]/g,
+      c: /\xE7/g,
+      C: /\xC7/g,
+      n: /\xF1/g,
+      N: /\xD1/g
+    };
     console.log("Dados que vem da chave EV: " + ev.target.value);
     let linha = ev.target.value;
+
+    for (let i in acentos) {
+
+      linha = linha.replace(acentos[i], i);
+    }
     console.log("Dados que vem da variavel linha: " + linha);
 
-    if (linha && linha.trim() != "") {
-      this.flag = true;
+    if (linha && linha.trim() != "" && linha.length>0) {
+      
       console.log("Variavel linha Entrou no IF");
-      this.bus = this.bus.filter((item) => {
+      this.bus2 = this.bus.filter((item) => {
+        if (item.linha.toUpperCase().includes(linha.toUpperCase()))
+        {
+           this.flag = true;
+           console.log("Variavel linha Entrou no IF2");
+           return (item.linha.toUpperCase());
+        }
 
-        return (item.linha.toLocaleUpperCase().indexOf(linha.toLocaleUpperCase()) > -1);
       });
+
+      if (this.bus2.length == 0) {
+        this.flag = false;
+        this.alert.create({
+          title: "Linha não encontrada",
+          subTitle:
+            "Por favor procure outra linha!",
+          buttons: [{ text: "Confirmar"
+            }]
+        })
+          .present();
+          
+      }
+
+      console.log(this.bus2);
+      console.log(this.flag);
 
     }
     else{
       this.flag=false;
+      console.log(this.flag);
     }
   
   }
 
   public buscar(bus: Onibus) {
     console.log("Valor da chave bus: " + bus);
-    //this.navCtrl.push(BuslinhaPage, { bus });
+    //this.navCtrl.push(BusLinhaPage, { bus });
   }
 
 
