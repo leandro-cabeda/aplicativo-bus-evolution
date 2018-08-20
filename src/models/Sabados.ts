@@ -3,7 +3,7 @@ import { Bairros } from "./Bairros";
 export class Sabados {
 
 
-  constructor(public bairros: Bairros[]) {
+  constructor(public nome: string, public bairros: Bairros[]) {
   }
 
 

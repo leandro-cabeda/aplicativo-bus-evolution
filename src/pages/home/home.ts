@@ -3,6 +3,7 @@ import { NavController, LoadingController, AlertController } from 'ionic-angular
 import { Onibus } from '../../models/Onibus';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
+import { BusLinhaPage } from '../bus-linha/bus-linha';
 
 @Component({
   selector: 'page-home',
@@ -67,12 +68,12 @@ export class HomePage {
 
     if (linha && linha.trim() != "" && linha.length>0) {
       
-      console.log("Variavel linha Entrou no IF");
+      //console.log("Variavel linha Entrou no IF");
       this.bus2 = this.bus.filter((item) => {
         if (item.linha.toUpperCase().includes(linha.toUpperCase()))
         {
            this.flag = true;
-           console.log("Variavel linha Entrou no IF2");
+           //console.log("Variavel linha Entrou no IF2");
            return (item.linha.toUpperCase());
         }
 
@@ -91,19 +92,24 @@ export class HomePage {
           
       }
 
-      console.log(this.bus2);
-      console.log(this.flag);
+      //console.log(this.bus2);
+      //console.log(this.flag);
 
     }
     else{
       this.flag=false;
-      console.log(this.flag);
+      //console.log(this.flag);
     }
   
   }
 
-  public buscar(bus: Onibus) {
-    console.log("Valor da chave bus: " + bus);
+  public horario(bus: Onibus) {
+    console.log("Valor da linha bus: " + bus.linha);
+    this.navCtrl.push(BusLinhaPage, { bus });
+  }
+
+  public rota(bus: Onibus) {
+    console.log("Valor da rota bus: " + bus);
     //this.navCtrl.push(BusLinhaPage, { bus });
   }
 

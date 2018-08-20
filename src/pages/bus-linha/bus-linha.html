@@ -1,12 +1,70 @@
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>bus_linha</ion-title>
+  <ion-navbar color="secondary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title text-center>Lista de Horários</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding text-wrap>
+  <ion-list >
+    <ion-list-header color="danger" text-center>
+      <ion-icon color="dark" ios="ios-bus" md="md-bus">
+         <label class="hor">{{bus.sabados.nome}}</label>
+      </ion-icon>
+    </ion-list-header>
 
+    <ion-list class="lista" *ngFor="let bus of bar">
+      <h1 text-center>{{bus.nome}}</h1>
+      <label color="dark" *ngFor="let t of te">
+      <h2 class="ho" *ngFor="let h of ho">
+        <label *ngIf="bus.nome===t.nome">
+        {{h}}
+        </label>
+      </h2>
+    </label>
+    </ion-list>
+    </ion-list>
+  <br/>
+
+    <ion-list>
+    <ion-list-header color="danger" text-center>
+      <ion-icon color="dark" ios="ios-bus" md="md-bus">
+        <label class="hor">{{bus.dias.nome}}</label>
+      </ion-icon>
+    </ion-list-header>
+    
+    <ion-list *ngFor="let bus2 of bar2" class="lista">
+      <h1 text-center>{{bus2.nome}}</h1>
+      <label class="ho">
+        {{bus2.horarios}}
+      </label>
+    </ion-list>
+    </ion-list>
+    <br/>
+
+    <ion-list>
+    <ion-list-header color="danger" text-center>
+      <ion-icon color="dark" ios="ios-bus" md="md-bus">
+        <label class="hor">{{bus.domingos_feriados.nome}}</label>
+      </ion-icon>
+    </ion-list-header>
+    
+    <ion-list *ngFor="let bus3 of bar3" class="lista">
+      <h1 text-center>{{bus3.nome}}</h1>
+      <label class="ho">
+        {{bus3.horarios}}
+      </label>
+    </ion-list>
+    </ion-list>
 </ion-content>
+
+
+
+<ion-footer>
+  <ion-toolbar color="dark">
+    <ion-title text-center>Todos os direitos Reservados.</ion-title>
+  </ion-toolbar>
+</ion-footer>

@@ -2,7 +2,7 @@ import { Bairros } from "./Bairros";
 
 export class Domingos_feriados {
 
-  constructor(public bairros: Bairros[]) {
+  constructor(public nome: string, public bairros: Bairros[]) {
     
   }
 

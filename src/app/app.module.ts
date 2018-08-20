@@ -23,11 +23,13 @@ import 'rxjs/add/operator/toPromise';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { HttpServiceProvider } from '../providers/http-service/http-service';
+import { BusLinhaPage } from '../pages/bus-linha/bus-linha';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    BusLinhaPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import { HttpServiceProvider } from '../providers/http-service/http-service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    BusLinhaPage
   ],
   providers: [
     StatusBar,
