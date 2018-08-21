@@ -16,15 +16,11 @@
       </ion-icon>
     </ion-list-header>
 
-    <ion-list class="lista" *ngFor="let bus of bar">
-      <h1 text-center>{{bus.nome}}</h1>
-      <label color="dark" *ngFor="let t of te">
-      <h2 class="ho" *ngFor="let h of ho">
-        <label *ngIf="bus.nome===t.nome">
-        {{h}}
-        </label>
-      </h2>
-    </label>
+    <ion-list class="lista" *ngFor="let bu2 of bus2">
+      <h1 text-center>{{bu2.nome}}</h1>
+      <label class="ho" *ngFor="let b2 of bu2.horarios">
+       {{b2}}
+      </label>
     </ion-list>
     </ion-list>
   <br/>
@@ -36,10 +32,10 @@
       </ion-icon>
     </ion-list-header>
     
-    <ion-list *ngFor="let bus2 of bar2" class="lista">
-      <h1 text-center>{{bus2.nome}}</h1>
-      <label class="ho">
-        {{bus2.horarios}}
+    <ion-list *ngFor="let bu3 of bus3" class="lista">
+      <h1 text-center>{{bu3.nome}}</h1>
+      <label class="ho" *ngFor="let b3 of bu3.horarios">
+        {{b3}}
       </label>
     </ion-list>
     </ion-list>
@@ -52,10 +48,10 @@
       </ion-icon>
     </ion-list-header>
     
-    <ion-list *ngFor="let bus3 of bar3" class="lista">
-      <h1 text-center>{{bus3.nome}}</h1>
-      <label class="ho">
-        {{bus3.horarios}}
+    <ion-list *ngFor="let bu4 of bus4" class="lista">
+      <h1 text-center>{{bu4.nome}}</h1>
+      <label class="ho" *ngFor="let b4 of bu4.horarios">
+        {{b4}}
       </label>
     </ion-list>
     </ion-list>
