@@ -16,6 +16,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, 
     private alert: AlertController, private apibus:HttpServiceProvider) {
+    
 
   }
 
@@ -36,6 +37,7 @@ export class HomePage {
           .present();
       }
       );
+    
   }
 
 
