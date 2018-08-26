@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as Leaflet  from 'leaflet';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
@@ -10,7 +10,7 @@ import { Onibus } from '../../models/Onibus';
   selector: 'page-leaflet-map',
   templateUrl: 'leaflet-map.html',
 })
-export class LeafletMapPage implements OnInit{
+export class LeafletMapPage{
   public map:any;
   public bus:Onibus;
 
@@ -19,12 +19,15 @@ export class LeafletMapPage implements OnInit{
     this.bus = this.navParams.get("bus");
   }
 
-  ngOnInit(): void{
+  /*ngOnInit(): void{
     this.carregarMapa();
-  }
+  }*/
 
-  ionViewDidLoad() {
-    //this.carregarMapa();
+  /*ionViewDidLoad() {
+    this.carregarMapa();
+  }*/
+  ionViewDidEnter() {
+    this.carregarMapa();
   }
 
   public carregarMapa()
@@ -32,41 +35,17 @@ export class LeafletMapPage implements OnInit{
     this.map = Leaflet.map("map").fitWorld();
     console.log("Entrou no carregar");
     // Isso adicionará um mapa ao dispositivo.
-    Leaflet.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+    Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		maxZoom: 18,
-		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		id: 'mapbox.streets'
+    attribution: 'BusEvolution'
+
       }).addTo(this.map);
 
-    Leaflet.marker([51.5, -0.09]).addTo(this.map)
-      .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-      .openPopup();
-
-
-	function onLocationFound(e) {
-		var radius = e.accuracy / 2;
-
-		Leaflet.marker(e.latlng).addTo(this.map)
-			.bindPopup("You are within " + radius + " meters from this point").openPopup();
-
-		Leaflet.circle(e.latlng, radius).addTo(this.map);
-	}
-
-	function onLocationError(e) {
-		alert(e.message);
-	}
-
-	this.map.on('locationfound', onLocationFound);
-	this.map.on('locationerror', onLocationError);
-
-	this.map.locate({setView: true, maxZoom: 16});
 
       //Agora, quando você executar o aplicativo, verá que está sendo levado para o seu local no
       // ou melhor, o local onde seu dispositivo está no momento.
 
-    /*this.map.locate({
+    this.map.locate({
       setView: true,
       maxZoom: 10
 
@@ -85,7 +64,10 @@ export class LeafletMapPage implements OnInit{
               handler:()=>{}
             }]
           });
-        });
+        }).addTo(this.map)
+        .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+        .openPopup();
+
       group.addLayer(marker);
       this.map.addLayer(group);
       }).on('locationerror', (err) => {
@@ -118,7 +100,7 @@ export class LeafletMapPage implements OnInit{
     watch.subscribe((data) => {
       console.log("Dados que veio do Data: "+data.coords+"  "+data.timestamp);
     });
-    */
+
   }
 
 }
