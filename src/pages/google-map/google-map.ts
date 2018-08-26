@@ -7,19 +7,23 @@ import { Onibus } from '../../models/Onibus';
   selector: 'page-google-map',
   templateUrl: 'google-map.html',
 })
-export class GoogleMapPage implements OnInit{
+export class GoogleMapPage{
   public bus:Onibus;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.bus = this.navParams.get("bus");
   }
 
-  ngOnInit(): void {
+  /*ngOnInit(): void {
     this.carregarMapa();
-  }
+  }*/
 
-  ionViewDidLoad() {
-    //this.carregarMapa();
+  /*ionViewDidLoad() {
+    this.carregarMapa();
+  }*/
+
+  ionViewDidEnter() {
+    this.carregarMapa();
   }
 
   public carregarMapa()
