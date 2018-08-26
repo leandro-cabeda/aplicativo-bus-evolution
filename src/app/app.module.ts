@@ -4,6 +4,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import { Geolocation } from '@ionic-native/geolocation';
+
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { HttpModule } from '@angular/http';
 import { Http } from '@angular/http';
@@ -24,12 +26,16 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { HttpServiceProvider } from '../providers/http-service/http-service';
 import { BusLinhaPage } from '../pages/bus-linha/bus-linha';
+import { LeafletMapPage } from '../pages/leaflet-map/leaflet-map';
+import { GoogleMapPage } from '../pages/google-map/google-map';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    BusLinhaPage
+    BusLinhaPage,
+    LeafletMapPage,
+    GoogleMapPage
   ],
   imports: [
     BrowserModule,
@@ -41,13 +47,16 @@ import { BusLinhaPage } from '../pages/bus-linha/bus-linha';
   entryComponents: [
     MyApp,
     HomePage,
-    BusLinhaPage
+    BusLinhaPage,
+    LeafletMapPage,
+    GoogleMapPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    HttpServiceProvider
+    HttpServiceProvider,
+    Geolocation
   ]
 })
 export class AppModule {}

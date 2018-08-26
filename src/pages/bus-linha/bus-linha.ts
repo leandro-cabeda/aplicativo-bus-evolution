@@ -21,16 +21,16 @@ export class BusLinhaPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.bus = navParams.get("bus");
+    this.bus = this.navParams.get("bus");
     console.log("Valor que chegou no bus de linhas: "+this.bus);
     this.bus2=this.bus.sabados.bairros;
     this.bus3 = this.bus.dias.bairros;
     this.bus4 = this.bus.domingos_feriados.bairros;
-   
-    
+
+
 
   }
 
- 
+
 
 }

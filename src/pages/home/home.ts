@@ -4,6 +4,8 @@ import { Onibus } from '../../models/Onibus';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { BusLinhaPage } from '../bus-linha/bus-linha';
+import { LeafletMapPage } from '../leaflet-map/leaflet-map';
+import { GoogleMapPage } from '../google-map/google-map';
 
 @Component({
   selector: 'page-home',
@@ -14,9 +16,9 @@ export class HomePage {
   public bus2:Onibus[];
   public flag=false;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
     private alert: AlertController, private apibus:HttpServiceProvider) {
-    
+
 
   }
 
@@ -37,7 +39,7 @@ export class HomePage {
           .present();
       }
       );
-    
+
   }
 
 
@@ -69,7 +71,7 @@ export class HomePage {
     console.log("Dados que vem da variavel linha: " + linha);
 
     if (linha && linha.trim() != "" && linha.length>0) {
-      
+
       //console.log("Variavel linha Entrou no IF");
       this.bus2 = this.bus.filter((item) => {
         if (item.linha.toUpperCase().includes(linha.toUpperCase()))
@@ -91,9 +93,8 @@ export class HomePage {
             }]
         })
           .present();
-          
-      }
 
+      }
       //console.log(this.bus2);
       //console.log(this.flag);
 
@@ -102,17 +103,20 @@ export class HomePage {
       this.flag=false;
       //console.log(this.flag);
     }
-  
+
   }
 
   public horario(bus: Onibus) {
-    console.log("Valor da linha bus: " + bus.linha);
+    //console.log("Valor da linha bus: " + bus.linha);
     this.navCtrl.push(BusLinhaPage, { bus });
+
   }
 
   public rota(bus: Onibus) {
-    console.log("Valor da rota bus: " + bus);
-    //this.navCtrl.push(BusLinhaPage, { bus });
+    //console.log("Valor da rota bus: " + bus.linha);
+    this.navCtrl.push(LeafletMapPage, { bus });
+
+    //this.navCtrl.push(GoogleMapPage, { bus });
   }
 
 
