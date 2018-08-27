@@ -2,6 +2,15 @@ import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Onibus } from '../../models/Onibus';
 import { Geolocation } from '@ionic-native/geolocation';
+import {
+  GoogleMaps,
+  GoogleMap,
+  GoogleMapsEvent,
+  GoogleMapOptions,
+  CameraPosition,
+  MarkerOptions,
+  Marker
+} from '@ionic-native/google-maps';
 
 declare var google:any;
 
@@ -42,11 +51,13 @@ export class GoogleMapPage{
   }*/
 
   ionViewDidEnter() {
+    console.log("Entrou no DidEnter");
     this.carregarMapa();
   }
 
   public carregarMapa()
   {
+    console.log("Entrou na função carregarmapa");
     this.geolocation.getCurrentPosition().then(result=>{
       this.loadMap(result.coords.latitude,result.coords.longitude);
     });
@@ -54,6 +65,7 @@ export class GoogleMapPage{
 
   public loadMap(lat,lng)
   {
+    console.log("Entrou na função loadmap");
     let latlng= new google.maps.LatLng(lat,lng);
 
     let mapOptions={
