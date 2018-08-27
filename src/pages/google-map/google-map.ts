@@ -1,16 +1,7 @@
 import { Component} from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Onibus } from '../../models/Onibus';
 import { Geolocation } from '@ionic-native/geolocation';
-import {
-  GoogleMaps,
-  GoogleMap,
-  GoogleMapsEvent,
-  GoogleMapOptions,
-  CameraPosition,
-  MarkerOptions,
-  Marker
-} from '@ionic-native/google-maps';
 
 declare var google:any;
 
@@ -36,7 +27,7 @@ export class GoogleMapPage{
   }
 ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private platform:Platform,
+  constructor(public navCtrl: NavController, public navParams: NavParams,
     private alert: AlertController,
     private geolocation: Geolocation) {
     this.bus = this.navParams.get("bus");
@@ -51,9 +42,7 @@ export class GoogleMapPage{
   }*/
 
   ionViewDidEnter() {
-    this.platform.ready().then(()=>{
     this.carregarMapa();
-    });
   }
 
   public carregarMapa()

@@ -5,7 +5,6 @@ import { Bairros } from '../../models/Bairros';
 import { Sabados } from '../../models/Sabados';
 import { Domingos_feriados } from '../../models/Domingos_Feriados';
 import { Dias } from '../../models/Dias';
-import { bind2 } from '@angular/core/src/render3/instructions';
 
 @IonicPage()
 @Component({
