@@ -107,6 +107,7 @@ export class GoogleMapPage{
 
   public addinfowindow(marker,content)
   {
+    console.log("Entrou na função addinfowindow");
     let infowindow= new google.maps.InfoWindow({
       content:content
     });
@@ -119,6 +120,7 @@ export class GoogleMapPage{
   }
 
   public loadPoints() {
+    console.log("Entrou na função loadPoints");
     this.marker = [];
 
     for (const key of Object.keys(this.lugar)) {
