@@ -3,7 +3,7 @@
     <name>BusEvolution</name>
     <description>Aplicativo Híbrido EvolutionBus.</description>
     <author email="leandro.cabeda@hotmail.com" href="https://www.facebook.com/leandro.cabeda">Link perfil Facebook</author>
-    <content original-src="index.html" src="http://192.168.0.27:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
