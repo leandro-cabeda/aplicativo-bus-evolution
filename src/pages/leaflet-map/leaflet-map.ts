@@ -2,7 +2,7 @@ import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as Leaflet  from 'leaflet';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
-import { Geolocation } from '@ionic-native/geolocation';
+//import { Geolocation } from '@ionic-native/geolocation';
 import { Onibus } from '../../models/Onibus';
 
 @IonicPage()
@@ -11,11 +11,11 @@ import { Onibus } from '../../models/Onibus';
   templateUrl: 'leaflet-map.html',
 })
 export class LeafletMapPage{
-  public map:any;
+
   public bus:Onibus;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController,
-    private geolocation: Geolocation) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController){
+    //private geolocation: Geolocation) {
     this.bus = this.navParams.get("bus");
   }
 
@@ -32,7 +32,7 @@ export class LeafletMapPage{
 
   public carregarMapa()
   {
-
+    /*
     this.geolocation.getCurrentPosition({ enableHighAccuracy: false, maximumAge: Infinity, timeout: Infinity }).then((resp) => {
       console.log("Latitude: " + resp.coords.latitude);
       console.log("Longitude: " + resp.coords.longitude);
@@ -50,33 +50,61 @@ export class LeafletMapPage{
     console.log("Dados do Watch: " + watch);
     watch.subscribe((data) => {
       console.log("Dados que veio do Data: " + data.coords + "  " + data.timestamp);
-    });
+    });*/
 
 
-    this.map = Leaflet.map("map").fitWorld();
+    let map = Leaflet.map("map").fitWorld();
     console.log("Entrou no carregar");
     // Isso adicionará um mapa ao dispositivo.
     Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		maxZoom: 18,
-    attribution: 'BusEvolution'
+      attribution: 'BusEvolution',
+		  maxZoom: 19
+    }).addTo(map);
 
-      }).addTo(this.map);
+    map.locate({ setView: true });
 
-    this.map.setView([-28.263721, -52.420877],18);
+
+
+    function locationfound(e)
+    {
+      console.log("Valor de locationfound: "+e);
+      var radius = e.accuracy / 5;
+      Leaflet.marker(e.latlng).addTo(map)
+      .bindPopup('Olá , eu estou aqui hehehe!!!<br>' + "Distância: " + radius+ " metros de distância")
+      .openPopup();
+
+      Leaflet.circle(e.latlng,{
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: radius
+      }).addTo(map);
+    }
+
+    map.on("locationfound", locationfound);
+
+
+    function locationerror(err)
+    {
+      console.log("Valor de locationerror: " + err);
+    }
+    map.on("locationerror", locationerror);
+
+    /*this.map.setView([-28.263721, -52.420877],18);
 
     Leaflet.marker([-28.263721, -52.420877]).addTo(this.map)
       .bindPopup('Olá , eu estou aqui hehehe!!!<br>')
-      .openPopup();
+      .openPopup();*/
 
       //Agora, quando você executar o aplicativo, verá que está sendo levado para o seu local no
       // ou melhor, o local onde seu dispositivo está no momento.
 
-    this.map.locate({
+    /*this.map.locate({
       setView: true,
       maxZoom: 16
 
     }).on('locationfound', (e) => {
-      console.log('Onde você se encontra agora com seu aparelho');
+      console.log('Onde você se encontra agora com seu aparelho');*/
 
 
 
@@ -132,9 +160,9 @@ export class LeafletMapPage{
 
       group.addLayer(marker);
       this.map.addLayer(group);*/
-      }).on('locationerror', (err) => {
+      //}).on('locationerror', (err) => {
 
-        console.log("Ocorreu erro: "+err);
+        //console.log("Ocorreu erro: "+err);
         /*this.alert.create({
           title: "Atenção",
           message: "Ocorreu erro: "+err,
@@ -143,7 +171,7 @@ export class LeafletMapPage{
             handler: () => { }
           }]
         });*/
-    });
+    //});
 
 
   }
