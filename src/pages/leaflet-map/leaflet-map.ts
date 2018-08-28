@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import * as Leaflet  from 'leaflet';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Onibus } from '../../models/Onibus';
-import { LatLng } from '@ionic-native/google-maps';
 
 @IonicPage()
 @Component({
@@ -36,9 +35,7 @@ export class LeafletMapPage{
 
     this.geolocation.getCurrentPosition({ enableHighAccuracy: false, maximumAge: Infinity, timeout: Infinity }).then((resp) => {
       console.log("Latitude: " + resp.coords.latitude);
-      let lat = resp.coords.latitude;
       console.log("Longitude: " + resp.coords.longitude);
-      let lng = resp.coords.longitude;
       console.log("Speed: " + resp.coords.speed);
       console.log("Heading: " + resp.coords.heading);
       console.log("Accuracy: " + resp.coords.accuracy);
@@ -60,51 +57,59 @@ export class LeafletMapPage{
     console.log("Entrou no carregar");
     // Isso adicionará um mapa ao dispositivo.
     Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		maxZoom: 16,
+		maxZoom: 18,
     attribution: 'BusEvolution'
 
       }).addTo(this.map);
 
+    this.map.setView([-28.263721, -52.420877],18);
+
+    Leaflet.marker([-28.263721, -52.420877]).addTo(this.map)
+      .bindPopup('Olá , eu estou aqui hehehe!!!<br>')
+      .openPopup();
 
       //Agora, quando você executar o aplicativo, verá que está sendo levado para o seu local no
       // ou melhor, o local onde seu dispositivo está no momento.
 
     this.map.locate({
       setView: true,
-      maxZoom: 18
+      maxZoom: 16
 
     }).on('locationfound', (e) => {
       console.log('Onde você se encontra agora com seu aparelho');
-      let radius=e.accuracy/2;
+
+
+
+      /*let radius=e.accuracy/2;
       Leaflet.marker(e.latlng).addTo(this.map)
-        .bindPopup('Olá , eu estou aqui hehehe!!!<br>'+"Valor de radius: "+radius)
-        .openPopup();
+        .bindPopup('Olá , eu estou aqui hehehe!!!<br>' + "Valor de radius: " + radius)
+        .openPopup();*/
 
       // Isso adiciona um circulo em volta onde está pela distancia.
-      Leaflet.circle([e.latlng, radius],{
+      /*Leaflet.circle([e.latlng, radius],{
         color: 'red',
         fillColor: '#f03',
         fillOpacity: 0.5,
         radius: 500
-      }).addTo(this.map);
+      }).addTo(this.map);*/
 
       // Isso adiciona um poligno no mapa
-      Leaflet.polygon([
+      /*Leaflet.polygon([
         [51.509, -0.08],
         [51.503, -0.06],
         [51.51, -0.047]
-      ]).addTo(this.map);
+      ]).addTo(this.map);*/
 
       // Trabalhando com pop-ups exemplos
-      Leaflet.marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+      /*Leaflet.marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
       Leaflet.circle.bindPopup("I am a circle.");
-      Leaflet.polygon.bindPopup("I am a polygon.");
+      Leaflet.polygon.bindPopup("I am a polygon.");*/
 
       // Exemplo implementando um pop-up com seus dados de latitude e longitude e acrescentando mensagem
-      Leaflet.popup()
+      /*Leaflet.popup()
         .setLatLng([51.5, -0.09])
         .setContent("I am a standalone popup.")
-        .openOn(this.map);
+        .openOn(this.map);*/
 
 
         //Agora, adicionamos um grupo de recursos, criamos um marcador e adicionamos o
@@ -128,14 +133,16 @@ export class LeafletMapPage{
       group.addLayer(marker);
       this.map.addLayer(group);*/
       }).on('locationerror', (err) => {
-        this.alert.create({
+
+        console.log("Ocorreu erro: "+err);
+        /*this.alert.create({
           title: "Atenção",
           message: "Ocorreu erro: "+err,
           buttons: [{
             text: "Aceitar",
             handler: () => { }
           }]
-        });
+        });*/
     });
 
 
