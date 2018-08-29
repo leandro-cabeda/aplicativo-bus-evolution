@@ -5,8 +5,13 @@
     </button>
     <ion-title text-center>Mapa Leaflet</ion-title>
   </ion-navbar>
+  <ion-row responsive-sm>
+    <ion-col>
+      <button ion-button color="dark" (click)="MostrarLatLng()">
+        Clique 2x para Ver Latitude e Longitude</button>
+    </ion-col>
+  </ion-row>
 </ion-header>
-
 
 <ion-content>
   <div id="map"></div>

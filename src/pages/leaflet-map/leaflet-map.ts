@@ -4,6 +4,10 @@ import * as Leaflet  from 'leaflet';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 //import { Geolocation } from '@ionic-native/geolocation';
 import { Onibus } from '../../models/Onibus';
+import 'leaflet-draw';
+
+declare const L:any;
+var map;
 
 @IonicPage()
 @Component({
@@ -13,6 +17,8 @@ import { Onibus } from '../../models/Onibus';
 export class LeafletMapPage{
 
   public bus:Onibus;
+  public marc:any;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController){
     //private geolocation: Geolocation) {
@@ -53,7 +59,7 @@ export class LeafletMapPage{
     });*/
 
 
-    let map = Leaflet.map("map").fitWorld();
+     map = Leaflet.map("map").fitWorld();
     console.log("Entrou no carregar");
     // Isso adicionará um mapa ao dispositivo.
     Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -70,7 +76,7 @@ export class LeafletMapPage{
       console.log("Valor de locationfound: "+e);
       var radius = e.accuracy / 5;
       Leaflet.marker(e.latlng).addTo(map)
-      .bindPopup('Olá , eu estou aqui hehehe!!!<br>' + "Distância: " + radius+ " metros de distância")
+      .bindPopup('Olá , eu estou aqui hehehe!!!<br>' + "Distância: " + radius+ " metros do ponto")
       .openPopup();
 
       Leaflet.circle(e.latlng,{
@@ -88,6 +94,7 @@ export class LeafletMapPage{
     {
       console.log("Valor de locationerror: " + err);
     }
+
     map.on("locationerror", locationerror);
 
     /*this.map.setView([-28.263721, -52.420877],18);
@@ -172,6 +179,95 @@ export class LeafletMapPage{
           }]
         });*/
     //});
+
+
+  }
+
+  MostrarLatLng()
+  {
+
+    /* Exemplo de GeoJSON objetos
+    var states = [{
+      "type": "Feature",
+      "properties": { "party": "Republican" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-104.05, 48.99],
+          [-97.22, 48.98],
+          [-96.58, 45.94],
+          [-104.03, 45.94],
+          [-104.05, 48.99]
+        ]]
+      }
+    }, {
+      "type": "Feature",
+      "properties": { "party": "Democrat" },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-109.05, 41.00],
+          [-102.06, 40.99],
+          [-102.03, 36.99],
+          [-109.04, 36.99],
+          [-109.05, 41.00]
+        ]]
+      }
+    }];
+
+    L.geoJSON(states, {
+      style: function (feature) {
+        switch (feature.properties.party) {
+          case 'Republican': return { color: "#ff0000" };
+          case 'Democrat': return { color: "#0000ff" };
+        }
+      }
+    }).addTo(map);*/
+
+    let map2=map;
+    let popup=L.popup();
+
+
+    function mapclick(e)
+    {
+
+      console.log("valor lat: "+e.latlng.lat+"<br>"+"valor lng: "+e.latlng.lng);
+
+      let myLines = [{
+        "type": "LineString",
+        "coordinates": [[e.latlng.lat, e.latlng.lng], [e.latlng.lat, e.latlng.lng], [e.latlng.lat, e.latlng.lng]]
+      }, {
+        "type": "LineString",
+          "coordinates": [[e.latlng.lat, e.latlng.lng], [e.latlng.lat, e.latlng.lng], [e.latlng.lat, e.latlng.lng]]
+      }];
+
+      var myStyle = {
+        "color": "#ff7800",
+        "weight": 5,
+        "opacity": 0.65
+      };
+
+      L.geoJSON(myLines, {
+        style: myStyle
+      }).addTo(map2);
+
+      popup.setLatLng(e.latlng)
+      .setContent("Latitude e Lontitude deste local é:<br> "+e.latlng.toString())
+      .openOn(map2);
+      console.log("Valores coordenadas latlng: " + e.latlng.toString());
+    }
+
+    if(this.marc==1)
+    {
+      map2.on("click",mapclick);
+      this.marc=0;
+    }
+    else
+    {
+      map2.off("click");
+      this.marc=1;
+    }
+    console.log("Valor da variavel marc: " + this.marc);
 
 
   }
