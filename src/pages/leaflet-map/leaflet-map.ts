@@ -232,7 +232,7 @@ export class LeafletMapPage{
     {
 
       console.log("valor lat: "+e.latlng.lat+"<br>"+"valor lng: "+e.latlng.lng);
-
+      /*
       let myLines = [{
         "type": "LineString",
         "coordinates": [[e.latlng.lat, e.latlng.lng], [e.latlng.lat, e.latlng.lng], [e.latlng.lat, e.latlng.lng]]
@@ -250,6 +250,7 @@ export class LeafletMapPage{
       L.geoJSON(myLines, {
         style: myStyle
       }).addTo(map2);
+      */
 
       popup.setLatLng(e.latlng)
       .setContent("Latitude e Lontitude deste local é:<br> "+e.latlng.toString())
