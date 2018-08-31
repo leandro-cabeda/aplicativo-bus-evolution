@@ -114,9 +114,9 @@ export class HomePage {
 
   public rota(bus: Onibus) {
     //console.log("Valor da rota bus: " + bus.linha);
-    //this.navCtrl.push(LeafletMapPage, { bus });
+    this.navCtrl.push(LeafletMapPage, { bus });
 
-    this.navCtrl.push(GoogleMapPage, { bus });
+    //this.navCtrl.push(GoogleMapPage, { bus });
   }
 
 

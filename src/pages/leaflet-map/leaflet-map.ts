@@ -5,6 +5,8 @@ import { AlertController } from 'ionic-angular/components/alert/alert-controller
 //import { Geolocation } from '@ionic-native/geolocation';
 import { Onibus } from '../../models/Onibus';
 import 'leaflet-draw';
+import 'leaflet-routing-machine';
+import 'leaflet-polylinedecorator';
 
 declare const L:any;
 var map;
@@ -18,6 +20,8 @@ export class LeafletMapPage{
 
   public bus:Onibus;
   public marc:any;
+  public lat:any;
+  public lng:any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController){
@@ -75,9 +79,14 @@ export class LeafletMapPage{
     {
       console.log("Valor de locationfound: "+e);
       var radius = e.accuracy / 5;
+      this.lat=e.latlng.lat;
+      this.lng=e.latlng.lng;
+
+      console.log("Latitude minha: "+this.lat+"<br>"+"Longitude minha: "+this.lng);
       Leaflet.marker(e.latlng).addTo(map)
       .bindPopup('Olá , eu estou aqui hehehe!!!<br>' + "Distância: " + radius+ " metros do ponto")
       .openPopup();
+
 
       Leaflet.circle(e.latlng,{
         color: 'red',
@@ -251,6 +260,24 @@ export class LeafletMapPage{
         style: myStyle
       }).addTo(map2);
       */
+
+      /*L.Routing.control({
+        waypoints: [
+          L.latLng(parseFloat(this.lat), parseFloat(this.lng)),
+          L.latLng(parseFloat(e.latlng.lat), parseFloat(e.latlng.lng))
+        ]
+      }).addTo(map2);*/
+
+      var polyline = L.polyline([parseFloat(this.lat), parseFloat(this.lng)],
+      [parseFloat(e.latlng.lat), parseFloat(e.latlng.lng)]).addTo(map2);
+
+      var decorator = L.polylineDecorator(polyline, {
+        patterns: [
+          { offset: 0, repeat: 20, symbol: L.Symbol.dash({ pixelSize: 10 }) }
+        ]
+      }).addTo(map2);
+
+
 
       popup.setLatLng(e.latlng)
       .setContent("Latitude e Lontitude deste local é:<br> "+e.latlng.toString())
