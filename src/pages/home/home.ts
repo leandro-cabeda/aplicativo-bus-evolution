@@ -30,13 +30,13 @@ export class HomePage {
       },
       (err: HttpErrorResponse) => {
         console.log(err);
-        this.alert.create({
+        /*this.alert.create({
           title: "Falha na conexão",
           subTitle:
             "Não foi possível carregar a lista de ônibus. Tente novamente mais tarde!",
           buttons: [{ text: "Confirmar" }]
         })
-          .present();
+          .present();*/
       }
       );
 
