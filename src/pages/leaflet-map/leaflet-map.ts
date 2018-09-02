@@ -9,7 +9,7 @@ import 'leaflet-control-geocoder';
 
 
 declare const L:any;
-declare var map:any;
+var map;
 
 @IonicPage()
 @Component({
