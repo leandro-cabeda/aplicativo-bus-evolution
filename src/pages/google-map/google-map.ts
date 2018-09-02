@@ -61,7 +61,8 @@ export class GoogleMapPage{
   {
     console.log("Entrou na função carregarmapa");
     this.geolocation.getCurrentPosition().then(result=>{
-      this.loadMap(result.coords.latitude,result.coords.longitude);
+      //this.loadMap(result.coords.latitude,result.coords.longitude);
+      this.carregaRota(result.coords.latitude, result.coords.longitude);
       this.lat=result.coords.latitude;
       this.lng=result.coords.longitude;
     }).catch(err=>{
@@ -76,7 +77,7 @@ export class GoogleMapPage{
     });
   }
 
-  public loadMap(lat,lng)
+ /* public loadMap(lat,lng)
   {
     console.log("Entrou na função loadmap");
     let latlng= new google.maps.LatLng(lat,lng);
@@ -116,9 +117,7 @@ export class GoogleMapPage{
 
     this.loadPoints();
 
-    this.carregaRota(lat,lng);
-
-  }
+  }*/
 
   public addinfowindow(marker,content)
   {
@@ -160,9 +159,10 @@ export class GoogleMapPage{
 
   public carregaRota(lat,lng)
   {
-    let directionService = new google.maps.DirectionsService();
-    let directionDisplay = new google.maps.DirectionsRenderer();
-    let bounds = new google.maps.LatLngBounds();
+    this.loadPoints();
+    var directionService = new google.maps.DirectionsService();
+    var directionDisplay = new google.maps.DirectionsRenderer();
+    var bounds = new google.maps.LatLngBounds();
 
     let latlng = new google.maps.LatLng(lat, lng);
 
@@ -175,9 +175,9 @@ export class GoogleMapPage{
 
     let element = document.getElementById("map");
 
-    let map = new google.maps.Map(element, mapOptions);
+    var map = new google.maps.Map(element, mapOptions);
 
-    let marker = new google.maps.Marker({
+    var marker = new google.maps.Marker({
       // position recebe a longitude e latitude de onde se encontra
       position: latlng,
       title: "Minha localização",
@@ -185,7 +185,7 @@ export class GoogleMapPage{
     });
     marker.setMap(map);
 
-    let content = '<div id="myId" class="item item-thumbnail-left item-text-wrap">' +
+    var content = '<div id="myId" class="item item-thumbnail-left item-text-wrap">' +
       '<ion-item>' +
       '<ion-row>' +
       '<h6>' + marker.title + '</h6>' +
@@ -193,14 +193,12 @@ export class GoogleMapPage{
       '</ion-item>' +
       '</div>';
 
-    this.addinfowindow(marker, content);
-
     directionDisplay.setMap(map);
-    let geocoder = new google.maps.Geocoder();
+    var geocoder = new google.maps.Geocoder();
     //let service = new google.maps.DistanceMatrixService;
 
 
-    let origem={lat:parseFloat(lat),lng:parseFloat(lng)};
+    var origem={lat:parseFloat(lat),lng:parseFloat(lng)};
 
     // Configuração da direction request route da google api
     /* origin: LatLng | String | google.maps.Place,
@@ -217,7 +215,7 @@ export class GoogleMapPage{
         avoidTolls: Boolean,
         region: String */
 
-    let destination = new google.maps.LatLng(this.lugar[0].lat,this.lugar[0].lng);
+    var destination = new google.maps.LatLng(this.lugar[0].lat,this.lugar[0].lng);
 
     const request={
       //oirigin pode ser uma coordenada(LatLng),uma string ou um lugar
@@ -237,14 +235,14 @@ export class GoogleMapPage{
        estradas com portagem, se possível. */
       avoidTolls: false
     }
-    let msg="";
-    let resultlist=[];
-    let markerArray=[];
+    var msg="";
+    var resultlist=[];
+    var markerArray=[];
     var destinationIcon = 'https://chart.googleapis.com/chart?' +
       'chst=d_map_pin_letter&chld=D|FF0000|000000';
 
     directionService.route(request,(result,status)=>{
-      resultlist.push(result.originAddresses,result.originAddresses);
+      resultlist.push(result);
       switch(status)
       {
         case "OK":
@@ -295,19 +293,22 @@ export class GoogleMapPage{
         });
       }
 
-      for(let i=0;i<resultlist.length;i++)
+      if(status=="OK")
       {
-        geocoder.geocode({"address":resultlist[i]});
-        markerArray.push(new google.maps.Marker({
-          map:map,
-          position: result,
-          icon: destinationIcon
-        }));
+        for(let i=0;i<resultlist.length;i++)
+        {
+          geocoder.geocode({"address":resultlist[i]});
+          markerArray.push(new google.maps.Marker({
+            map:map,
+            position: result,
+            icon: destinationIcon
+          }));
+        }
       }
 
     });
 
-
+    this.addinfowindow(marker, content);
 
   }
 

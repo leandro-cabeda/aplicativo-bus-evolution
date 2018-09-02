@@ -5,10 +5,11 @@ import { AlertController } from 'ionic-angular/components/alert/alert-controller
 //import { Geolocation } from '@ionic-native/geolocation';
 import { Onibus } from '../../models/Onibus';
 import 'leaflet-routing-machine';
+import 'leaflet-control-geocoder';
 
 
 declare const L:any;
-var map;
+declare var map:any;
 
 @IonicPage()
 @Component({
@@ -24,7 +25,7 @@ export class LeafletMapPage{
   public latlng:any;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private alert: AlertController){
+  constructor(public navCtrl: NavController, public navParams: NavParams){//, private alert: AlertController){
     //private geolocation: Geolocation) {
     this.bus = this.navParams.get("bus");
   }
@@ -68,9 +69,28 @@ export class LeafletMapPage{
     // Isso adicionará um mapa ao dispositivo.
     Leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: 'BusEvolution',
-		  maxZoom: 19
+		  maxZoom: 18
     }).addTo(map);
+    //L.Control.geocoder().addTo(map);
 
+  //Isso adicionará um polígono que representa
+  //a caixa delimitadora do resultado quando um resultado é selecionado.
+    let geocoder = L.Control.geocoder({
+      defaultMarkGeocode: false
+    })
+      .on('markgeocode', function (e) {
+        let bbox = e.geocode.bbox;
+        let poly = L.polygon([
+          bbox.getSouthEast(),
+          bbox.getNorthEast(),
+          bbox.getNorthWest(),
+          bbox.getSouthWest()
+        ]).addTo(map);
+        map.fitBounds(poly.getBounds());
+      })
+      .addTo(map);
+
+    // Isso é ponto onde usuário se encontra
     map.locate({ setView: true });
 
 
@@ -78,16 +98,15 @@ export class LeafletMapPage{
     function locationfound(e)
     {
       console.log("Valor de locationfound: "+e);
-      var radius = e.accuracy / 10;
+      var radius = e.accuracy / 8;
       this.lat=e.latlng.lat;
       this.lng=e.latlng.lng;
-      this.latlng=e.latlng;
+      //this.latlng=e.latlng;
 
       console.log("Latitude minha: "+this.lat+"<br>"+"Longitude minha: "+this.lng);
       Leaflet.marker(e.latlng).addTo(map)
       .bindPopup('Olá , eu estou aqui hehehe!!!<br>' + "Distância: " + radius+ " metros do ponto")
       .openPopup();
-
 
       Leaflet.circle(e.latlng,{
         color: 'red',
@@ -262,13 +281,31 @@ export class LeafletMapPage{
         style: myStyle
       }).addTo(map2);
       */
+      //L.Control.geocoder().addTo(map2);
 
-      /*L.Routing.control({
+      let geocoder = L.Control.geocoder({
+        defaultMarkGeocode: false
+      })
+        .on('markgeocode', function (e) {
+          let bbox = e.geocode.bbox;
+          let poly = L.polygon([
+            bbox.getSouthEast(),
+            bbox.getNorthEast(),
+            bbox.getNorthWest(),
+            bbox.getSouthWest()
+          ]).addTo(map2);
+          map2.fitBounds(poly.getBounds());
+        })
+        .addTo(map2);
+
+      Leaflet.Routing.control({
         waypoints: [
           L.latLng(parseFloat(this.lat), parseFloat(this.lng)),
           L.latLng(parseFloat(e.latlng.lat), parseFloat(e.latlng.lng))
         ]
-      }).addTo(map2);*/
+        //routeWhileDragging: true,
+        //geocoder: L.Control.Geocoder.nominatim()
+      }).addTo(map2);
 
 
 
