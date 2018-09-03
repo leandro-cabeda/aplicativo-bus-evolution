@@ -15,6 +15,7 @@ import {
   Marker
 } from '@ionic-native/google-maps';
 
+
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { HttpModule } from '@angular/http';
 import { Http } from '@angular/http';
