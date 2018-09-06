@@ -144,9 +144,7 @@ export class LeafletMapPage{
 
           Leaflet.latLng(this.lat,this.lng),
           Leaflet.latLng(e.latlng.lat,e.latlng.lng)
-        ],
-        routeWhileDragging: false,
-        geocoder: Leaflet.Control.Geocoder.nominatim()
+        ]
       }).addTo(map);
 
 
