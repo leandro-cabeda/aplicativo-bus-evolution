@@ -128,6 +128,7 @@ export class LeafletMapPage{
     function clicarmapa(e)
     {
 
+      console.log("Lat: "+e.latlng.lat+" "+"Lng: "+e.latlng.lng);
       Leaflet.marker(e.latlng).addTo(map)
         .bindPopup('Latitude desse ponto: '+e.latlng.lat+'<br>'+'Longitude desse ponto: '+e.latlng.lng)
         .openPopup();
@@ -144,7 +145,7 @@ export class LeafletMapPage{
           Leaflet.latLng(this.lat,this.lng),
           Leaflet.latLng(e.latlng.lat,e.latlng.lng)
         ],
-        routeWhileDragging: true,
+        routeWhileDragging: false,
         geocoder: Leaflet.Control.Geocoder.nominatim()
       }).addTo(map);
 
