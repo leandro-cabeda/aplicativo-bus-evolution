@@ -4,7 +4,7 @@ import { Sabados } from './Sabados';
 export class Onibus {
 
   constructor(public linha: string,
-    public rotas: String[]=new Array<String>(),
+    public rotas: String[][],
     public dias: Dias,
     public sabados: Sabados,
     public domingos_feriados: Domingos_feriados) {

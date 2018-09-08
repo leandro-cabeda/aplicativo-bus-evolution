@@ -8,21 +8,21 @@ export class HttpServiceProvider {
   public url2 = "http://localhost:8080/api";
 
   constructor(public http: HttpClient) {
-    
+
   }
 
   public listaTodos() {
-    //return this.http.get<Onibus[]>(this.url + "/buscalinhas");
-    
-    return this.http.get<Onibus[]>(this.url2+"/buscalinhas");
+    return this.http.get<Onibus[]>(this.url + "/buscalinhas");
+
+    //return this.http.get<Onibus[]>(this.url2+"/buscalinhas");
 
 
   }
 
   public buscar(linha: string) {
-    //return this.http.get<Onibus[]>(this.url+"/buscalinhas/"+linha);
+    return this.http.get<Onibus[]>(this.url+"/buscalinhas/"+linha);
 
-    return this.http.get<Onibus[]>(this.url2 + "/buscalinhas/"+linha);
+    //return this.http.get<Onibus[]>(this.url2 + "/buscalinhas/"+linha);
 
   }
 
