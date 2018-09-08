@@ -20,7 +20,7 @@ export class HttpServiceProvider {
 
   }
 
-  public buscar(linha: string) {
+  public buscar(linha:string) {
     return this.http.get<Onibus[]>(this.url+"/buscalinhas/"+linha);
 
     //return this.http.get<Onibus[]>(this.url2 + "/buscalinhas/"+linha);

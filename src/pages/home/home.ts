@@ -52,26 +52,37 @@ export class HomePage {
     console.log("Dados que vem da chave EV: " + ev.target.value);
 
     let linha = ev.target.value;
-    this.apibus.buscar(linha).subscribe(bus=>{
-      console.log("Deu certo a busca");
 
-      this.bus2=bus;
-      this.flag=true;
-    },
-    err=>{
-      console.log("Ocorreu erro, o erro foi: "+err);
-      this.flag = false;
-      this.alert.create({
-        title: "Linha não encontrada",
-        subTitle:
-          "Por favor procure outra linha!",
-        buttons: [{
-          text: "Confirmar"
-        }]
-      })
-        .present();
+    if (linha && linha.trim() != "" && linha.length > 0)
+    {
+      this.apibus.buscar(linha).subscribe(bus=>{
+        console.log("Deu certo a busca");
+          this.bus2=bus;
+          this.flag=true;
 
-    })
+      },
+      err=>{
+        console.log("Ocorreu erro, o erro foi: "+err);
+        this.flag = false;
+        this.alert.create({
+          title: "Linha não encontrada",
+          subTitle:
+            "Por favor procure outra linha!",
+          buttons: [{
+            text: "Confirmar",
+            handler: () => {
+              this.navCtrl.setRoot(HomePage);
+            }
+          }]
+        })
+          .present();
+
+      });
+    }
+    else
+    {
+      this.flag=false;
+    }
 
     /*let acentos = {
       a: /[\xE0-\xE6]/g,
