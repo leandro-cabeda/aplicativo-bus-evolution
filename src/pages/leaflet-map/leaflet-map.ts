@@ -80,26 +80,7 @@ export class LeafletMapPage{
       Leaflet.circle([bu[i][0], bu[i][1]], options).addTo(map);
       }
 
-
     }
-
-    function clicar(e){
-
-      Leaflet.marker(e.latlng).addTo(map).bindPopup("Lat: "+e.latlng.lat+"<br/>"+
-      "Lng: "+e.latlng.lng)
-        .openPopup();
-      console.log("Lat: " + e.latlng.lat +
-        "  Lng: " + e.latlng.lng);
-
-    };
-  map.on("click", clicar);
-
-    function locationerror(err)
-    {
-      console.log("Valor de locationerror: " + err);
-    }
-
-    map.on("locationerror", locationerror);
 
   }
 
