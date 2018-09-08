@@ -71,11 +71,14 @@ export class LeafletMapPage{
 
     for(let i=0;i<bu.length;i++)
     {
+      if(i==0 || i==bu.length-1)
+      {
         Leaflet.marker([bu[i][0],bu[i][1]]).addTo(map).
             bindPopup("Sua rotina!!")
             .openPopup();
 
       Leaflet.circle([bu[i][0], bu[i][1]], options).addTo(map);
+      }
 
 
     }

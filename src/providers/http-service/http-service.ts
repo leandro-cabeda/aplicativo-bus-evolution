@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Onibus } from '../../models/Onibus';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class HttpServiceProvider {

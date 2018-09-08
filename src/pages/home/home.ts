@@ -49,7 +49,31 @@ export class HomePage {
 
   public getbus(ev: any) {
 
-    var acentos = {
+    console.log("Dados que vem da chave EV: " + ev.target.value);
+
+    let linha = ev.target.value;
+    this.apibus.buscar(linha).subscribe(bus=>{
+      console.log("Deu certo a busca");
+
+      this.bus2=bus;
+      this.flag=true;
+    },
+    err=>{
+      console.log("Ocorreu erro, o erro foi: "+err);
+      this.flag = false;
+      this.alert.create({
+        title: "Linha não encontrada",
+        subTitle:
+          "Por favor procure outra linha!",
+        buttons: [{
+          text: "Confirmar"
+        }]
+      })
+        .present();
+
+    })
+
+    /*let acentos = {
       a: /[\xE0-\xE6]/g,
       A: /[\xC0-\xC6]/g,
       e: /[\xE8-\xEB]/g,
@@ -65,29 +89,27 @@ export class HomePage {
       n: /\xF1/g,
       N: /\xD1/g
     };
-    console.log("Dados que vem da chave EV: " + ev.target.value);
-    let linha = ev.target.value;
 
     for (let i in acentos) {
 
       linha = linha.replace(acentos[i], i);
     }
-    console.log("Dados que vem da variavel linha: " + linha);
+    //console.log("Dados que vem da variavel linha: " + linha);
 
     if (linha && linha.trim() != "" && linha.length>0) {
 
-      //console.log("Variavel linha Entrou no IF");
+
       this.bus2 = this.bus.filter((item) => {
         if (item.linha.toUpperCase().includes(linha.toUpperCase()))
         {
            this.flag = true;
-           //console.log("Variavel linha Entrou no IF2");
+
            return (item.linha.toUpperCase());
         }
 
-      });
+      });*/
 
-      if (this.bus2.length == 0) {
+     /* if (this.bus2.length == 0) {
         this.flag = false;
         this.alert.create({
           title: "Linha não encontrada",
@@ -98,15 +120,14 @@ export class HomePage {
         })
           .present();
 
-      }
-      //console.log(this.bus2);
-      //console.log(this.flag);
+      }*/
 
-    }
+
+    /*}
     else{
       this.flag=false;
-      //console.log(this.flag);
-    }
+
+    }*/
 
   }
 
