@@ -6,7 +6,6 @@ import { AlertController } from 'ionic-angular/components/alert/alert-controller
 import { Onibus } from '../../models/Onibus';
 import { BusLinhaPage } from '../bus-linha/bus-linha';
 
-
 declare const L:any;
 var map;
 
