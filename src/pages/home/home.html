@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content padding>
+
   <h1 text-center>Informe a linha que deseja:</h1>
   <ion-searchbar class="ser" (ionInput)="getbus($event)"></ion-searchbar>
   <ion-list *ngFor="let b of bus2" text-center>

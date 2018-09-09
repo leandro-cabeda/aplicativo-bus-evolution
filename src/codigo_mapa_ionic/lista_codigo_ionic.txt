@@ -345,3 +345,26 @@ import 'leaflet-control-geocoder';
     map.on("locationerror", locationerror);
 
 
+import { NativeGeocoder,
+NativeGeocoderOptions,
+NativeGeocoderReverseResult,
+NativeGeocoderForwardResult } from '@ionic-native/native-geocoder'; vai no app.module
+
+NativeGeocoder vai no provider do app.module
+
+private nativeGeocoder: NativeGeocoder (vai no construtor)
+
+ let opt: NativeGeocoderOptions = {
+      useLocale: true,
+      maxResults: 5
+    };
+
+this.nativeGeocoder.reverseGeocode(52.5072095, 13.1452818, opt)
+      .then((result: NativeGeocoderReverseResult[]) => console.log("Valor result: "+JSON.stringify(result[0].countryName)))
+      .catch((error: any) => console.log(error));
+
+    this.nativeGeocoder.forwardGeocode('Berlin', opt)
+      .then((coordinates: NativeGeocoderForwardResult[]) => console.log('The coordinates are latitude=' + coordinates[0].latitude + ' and longitude=' + coordinates[0].longitude))
+      .catch((error: any) => console.log("Erro: "+error));
+
+

@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+// usar para o google maps api
 import { Geolocation } from '@ionic-native/geolocation';
 import {
   GoogleMaps,

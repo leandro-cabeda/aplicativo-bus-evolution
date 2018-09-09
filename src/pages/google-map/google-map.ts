@@ -11,6 +11,7 @@ import {
   MarkerOptions,
   Marker
 } from '@ionic-native/google-maps';
+import { HomePage } from '../home/home';
 
 declare var google:any;
 
@@ -44,17 +45,11 @@ export class GoogleMapPage{
     this.bus = this.navParams.get("bus");
   }
 
-  /*ngOnInit(): void {
-    this.carregarMapa();
-  }*/
-
-  /*ionViewDidLoad() {
-    this.carregarMapa();
-  }*/
 
   ionViewDidEnter() {
     console.log("Entrou no DidEnter");
-    this.carregarMapa();
+      this.carregarMapa();
+
   }
 
   public carregarMapa()
@@ -71,7 +66,9 @@ export class GoogleMapPage{
         subTitle: "GPS está fora",
         buttons:[{
           text: "Confirmar",
-          handler:()=>{}
+          handler:()=>{
+            this.navCtrl.setRoot(HomePage);
+          }
         }]
       });
     });
@@ -224,7 +221,7 @@ export class GoogleMapPage{
       // TravelModel Especifica o tipo de transporte a ser calculado
       travelMode:"TRANSIT",
       /*unitSystem:google.maps.UnitSystem.METRIC
-      É utilizado para mostra ro calculado da rota mostrado em quilometros*/
+      É utilizado para mostrar o calculado da rota mostrado em quilometros*/
       unitSystem: google.maps.UnitSystem.METRIC,
       /*avoidHighways( opcional ) quando definido como
       true indica que a (s) rota (s) calculada (s) deve (m)
@@ -276,7 +273,7 @@ export class GoogleMapPage{
           break;
 
         default:
-          msg="Foram indiccados muitos pontos de rota ou a rota solicitada é muito longa e não pode ser processada";
+          msg="Foram indicados muitos pontos de rota ou a rota solicitada é muito longa e não pode ser processada";
         break;
 
       }
@@ -288,7 +285,9 @@ export class GoogleMapPage{
           message:msg,
           buttons:[{
             text:"Confirmar",
-            handler:()=>{}
+            handler:()=>{
+              this.navCtrl.setRoot(HomePage);
+            }
           }]
         });
       }

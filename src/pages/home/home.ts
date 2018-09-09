@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 import { Onibus } from '../../models/Onibus';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { BusLinhaPage } from '../bus-linha/bus-linha';
 import { LeafletMapPage } from '../leaflet-map/leaflet-map';
 import { GoogleMapPage } from '../google-map/google-map';
+
 
 @Component({
   selector: 'page-home',
@@ -49,7 +50,7 @@ export class HomePage {
 
   public getbus(ev: any) {
 
-    console.log("Dados que vem da chave EV: " + ev.target.value);
+    //console.log("Dados que vem da chave EV: " + ev.target.value);
 
     let linha = ev.target.value;
 
@@ -62,10 +63,13 @@ export class HomePage {
 
       },
       err=>{
-        console.log("Ocorreu erro, o erro foi: "+err);
+        /*for (const v in err) {
+          console.log("Ocorreu erro, o erro foi: " + v);
+        }*/
+
         this.flag = false;
         this.alert.create({
-          title: "Linha não encontrada",
+          title: err.error+"!!<br/>"+"Linha não encontrada!",
           subTitle:
             "Por favor procure outra linha!",
           buttons: [{
@@ -84,62 +88,6 @@ export class HomePage {
       this.flag=false;
     }
 
-    /*let acentos = {
-      a: /[\xE0-\xE6]/g,
-      A: /[\xC0-\xC6]/g,
-      e: /[\xE8-\xEB]/g,
-      E: /[\xC8-\xCB]/g,
-      i: /[\xEC-\xEF]/g,
-      I: /[\xCC-\xCF]/g,
-      o: /[\xF2-\xF6]/g,
-      O: /[\xD2-\xD6]/g,
-      u: /[\xF9-\xFC]/g,
-      U: /[\xD9-\xDC]/g,
-      c: /\xE7/g,
-      C: /\xC7/g,
-      n: /\xF1/g,
-      N: /\xD1/g
-    };
-
-    for (let i in acentos) {
-
-      linha = linha.replace(acentos[i], i);
-    }
-    //console.log("Dados que vem da variavel linha: " + linha);
-
-    if (linha && linha.trim() != "" && linha.length>0) {
-
-
-      this.bus2 = this.bus.filter((item) => {
-        if (item.linha.toUpperCase().includes(linha.toUpperCase()))
-        {
-           this.flag = true;
-
-           return (item.linha.toUpperCase());
-        }
-
-      });*/
-
-     /* if (this.bus2.length == 0) {
-        this.flag = false;
-        this.alert.create({
-          title: "Linha não encontrada",
-          subTitle:
-            "Por favor procure outra linha!",
-          buttons: [{ text: "Confirmar"
-            }]
-        })
-          .present();
-
-      }*/
-
-
-    /*}
-    else{
-      this.flag=false;
-
-    }*/
-
   }
 
   public horario(bus: Onibus) {
@@ -154,7 +102,6 @@ export class HomePage {
 
     //this.navCtrl.push(GoogleMapPage, { bus });
   }
-
 
 
 }
