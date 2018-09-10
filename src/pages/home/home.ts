@@ -100,12 +100,17 @@ export class HomePage {
   public rota(bus: Onibus) {
     //console.log("Valor da rota bus: " + bus.linha);
     this.navCtrl.push(LeafletMapPage, { bus });
+  }
 
-    //this.navCtrl.push(GoogleMapPage, { bus });
+  public mapa2() {
+    //console.log("Valor da rota bus: " + bus.linha);
+
+    this.navCtrl.push(GoogleMapPage);
   }
 
   public mapa()
   {
+    //console.log("Valor da rota bus: " + bus.linha);
     this.navCtrl.push(ModestMapsPage);
   }
 

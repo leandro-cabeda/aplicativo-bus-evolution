@@ -13,11 +13,11 @@
   <ion-searchbar class="ser" (ionInput)="getbus($event)"></ion-searchbar>
   <ion-list *ngFor="let b of bus2" text-center>
     <ion-item *ngIf="flag" class="ser" text-wrap>
-      <h1>
+      <h2>
         <ion-icon color="dark" ios="ios-bus" md="md-bus">
           {{b.linha}}
         </ion-icon>
-      </h1>
+      </h2>
       <h2>
       <button color="dark" ion-button round (click)="horario(b)">
         <ion-icon ios="ios-time" md="md-time">  Horarios</ion-icon>
@@ -28,8 +28,11 @@
       </h2>
     </ion-item>
   </ion-list>
-  <button ion-button item-end icon-left round (click)="mapa()">
+  <button ion-button item-end icon-left round color="dark" (click)="mapa()">
     <ion-icon name="arrow-dropright">Modest Maps</ion-icon>
+  </button>
+  <button ion-button item-end icon-left round color="secondary" (click)="mapa2()">
+    <ion-icon name="arrow-dropright">Google Maps</ion-icon>
   </button>
 </ion-content>
 
