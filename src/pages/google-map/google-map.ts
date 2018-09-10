@@ -2,6 +2,7 @@ import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { Onibus } from '../../models/Onibus';
 import { Geolocation } from '@ionic-native/geolocation';
+// Só se fosse usar do nativo
 import {
   GoogleMaps,
   GoogleMap,
@@ -11,8 +12,10 @@ import {
   MarkerOptions,
   Marker
 } from '@ionic-native/google-maps';
+// Fim nativo
 import { HomePage } from '../home/home';
 
+// Essa variavel é do namespace da própria google api, tem que ser declarada
 declare var google:any;
 
 @IonicPage()

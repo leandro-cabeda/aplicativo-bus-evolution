@@ -59,7 +59,7 @@ export class LeafletMapPage{
     }).addTo(map);
 
 
-    let options = {
+    var options = {
       color: 'red',
       fillColor: '#f03',
       fillOpacity: 0.5,
@@ -73,13 +73,37 @@ export class LeafletMapPage{
       if(i==0 || i==bu.length-1)
       {
         Leaflet.marker([bu[i][0],bu[i][1]]).addTo(map).
-            bindPopup("Sua rotina!!")
+            bindPopup("Rotina do Ônibus!!")
             .openPopup();
 
       Leaflet.circle([bu[i][0], bu[i][1]], options).addTo(map);
       }
 
     }
+
+    setTimeout(function () {
+      map.locate({ setView: true });
+      function locationfound(e)
+      {
+      var radius = e.accuracy / 8;
+      Leaflet.marker(e.latlng).addTo(map)
+        .bindPopup('Você se encontra aqui neste momento!!!<br>' + "Distância: " + radius + " metros deste ponto")
+        .openPopup();
+
+      Leaflet.circle(e.latlng, {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: radius
+      }).addTo(map);
+
+        map.setView([e.latlng.lat, e.latlng.lng], 13);
+        Leaflet.polyline(e.latlng, options).addTo(map);
+
+
+    }
+    map.on("locationfound", locationfound);
+    }, 10000);
 
   }
 

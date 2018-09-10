@@ -6,6 +6,7 @@ import { HttpServiceProvider } from '../../providers/http-service/http-service';
 import { BusLinhaPage } from '../bus-linha/bus-linha';
 import { LeafletMapPage } from '../leaflet-map/leaflet-map';
 import { GoogleMapPage } from '../google-map/google-map';
+import { ModestMapsPage } from '../modest-maps/modest-maps';
 
 
 @Component({
@@ -101,6 +102,11 @@ export class HomePage {
     this.navCtrl.push(LeafletMapPage, { bus });
 
     //this.navCtrl.push(GoogleMapPage, { bus });
+  }
+
+  public mapa()
+  {
+    this.navCtrl.push(ModestMapsPage);
   }
 
 

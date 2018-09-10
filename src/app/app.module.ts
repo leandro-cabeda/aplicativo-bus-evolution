@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 // usar para o google maps api
 import { Geolocation } from '@ionic-native/geolocation';
+// sos e fosse usar pro nativo do ionic o google maps
 import {
   GoogleMaps,
   GoogleMap,
@@ -15,6 +16,7 @@ import {
   MarkerOptions,
   Marker
 } from '@ionic-native/google-maps';
+// fim ionic google nativo
 
 
 import { HttpClient, HttpClientModule } from "@angular/common/http";
@@ -39,6 +41,7 @@ import { HttpServiceProvider } from '../providers/http-service/http-service';
 import { BusLinhaPage } from '../pages/bus-linha/bus-linha';
 import { LeafletMapPage } from '../pages/leaflet-map/leaflet-map';
 import { GoogleMapPage } from '../pages/google-map/google-map';
+import { ModestMapsPage } from '../pages/modest-maps/modest-maps';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,8 @@ import { GoogleMapPage } from '../pages/google-map/google-map';
     HomePage,
     BusLinhaPage,
     LeafletMapPage,
-    GoogleMapPage
+    GoogleMapPage,
+    ModestMapsPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +64,8 @@ import { GoogleMapPage } from '../pages/google-map/google-map';
     HomePage,
     BusLinhaPage,
     LeafletMapPage,
-    GoogleMapPage
+    GoogleMapPage,
+    ModestMapsPage
   ],
   providers: [
     StatusBar,
