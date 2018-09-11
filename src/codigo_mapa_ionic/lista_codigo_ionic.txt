@@ -368,3 +368,5 @@ this.nativeGeocoder.reverseGeocode(52.5072095, 13.1452818, opt)
       .catch((error: any) => console.log("Erro: "+error));
 
 
+
+

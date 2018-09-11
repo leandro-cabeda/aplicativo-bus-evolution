@@ -56,32 +56,41 @@ private alert:AlertController;
     var latitude = 37.7749295;
     var longitude = -122.4194155;
 
-    var loc = new com.modestmaps.Location(latitude, longitude);
+    //var loc = new com.modestmaps.Location(latitude, longitude);
+    //var loc=new MM.Location(latitude, longitude);
+
+    // Jeito de criar objetos com latitude e longitude
+    var loc = { lat: latitude, lon: longitude };
+    // passando a variavel com zoom ja
     map.setCenterZoom(loc, 14);
+    // seta um intervalo de range de zoom
+    map.setZoomRange(10, 16);
+    //seta um zoom
+    map.setZoom(12);
+
     var info = document.getElementById('map');
+    // cria uma função de retorno trazendo o centro daquela coodernada
     map.addCallback('drawn', function (m) {
       //info.innerHTML = m.getCenter().toString();
     });
-    map.setZoomRange(10, 16);
-    map.setZoom(12);
-
 
     //var point = new com.modestmaps.Point(latitude, longitude);
-
     /*
     Point é um objeto de dados simples com propriedades x e y.
     É mais usado para representar posições de pixel na tela ou no mapa.
     */
+   // cria pontos
     var p1 = new com.modestmaps.Point(10, 20);
     var p2 = new com.modestmaps.Point(20, 20);
+    // depois de pontos ja criados, cria uma resposta de distancia entre os pontos
     var d = com.modestmaps.Point.distance(p1, p2);
 
     //p3 está no meio do caminho entre p1 e p2:
+    // cria uma interpolação entre 2 pontos
     var amount = 0.5;
     var p3 = com.modestmaps.Point.interpolate(p1, p2, amount);
-    info.innerHTML="Distancia entre 2 pontos: "+d+" metros "+" interpolção de caminho"+
-    " entre os 2 pontos: "+p3;
-
+    //info.innerHTML="Distancia entre 2 pontos: "+d+" metros "+" interpolação de caminho"+
+    //" entre os 2 pontos: "+p3;
 
     /*var location = new MM.Location(37.8715926, -122.272747);
     var point = map.locationPoint(location);*/
@@ -90,6 +99,7 @@ private alert:AlertController;
     //map.zoomBy(1);
     // percorre
     //map.panBy(50, 50);
+
 
 
     // adicionado separado o location e o zoom
