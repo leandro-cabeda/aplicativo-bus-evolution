@@ -5,6 +5,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 // Variavel tem que ser declarada para usar do ModestMaps do java script, Namespace dela
 declare var MM:any;
+declare var com:any;
 
 @IonicPage()
 @Component({
@@ -43,22 +44,45 @@ private alert:AlertController;
     var template = new MM.Template('http://tile.openstreetmap.org/{Z}/{X}/{Y}.png');
     // adicionar ao layer  o template para cabar dentro do escopo se não ele se expandirá pra fora
     var layer = new MM.Layer(template);
+
     // ja utiliza uma dimensão fixa pro mapa ou se quiser adiciona no css 100% largura e 100% altura
-    var dimensions = new MM.Point(900, 600);
+    //var dimensions = new MM.Point(900, 600);
     // cria o mapa com essas opçoes
-    var map = new MM.Map(parent, layer, dimensions);
-    // adicionao separado o location e o zoom
+    //var map = new MM.Map(parent, layer, dimensions);
+    var map = new MM.Map(parent, layer);
+    // Location latitude e longitude
+    var latitude = 37.7749295;
+    var longitude = -122.4194155;
+    var loc = new com.modestmaps.Location(latitude, longitude);
+    map.setCenterZoom(loc, 14);
+    var info = document.getElementById('map');
+    map.addCallback('drawn', function (m) {
+      //info.innerHTML = m.getCenter().toString();
+    });
+    map.setZoomRange(10, 16);
+    map.setZoom(12);
+
+    /*var location = new MM.Location(37.8715926, -122.272747);
+    var point = map.locationPoint(location);*/
+    //map.zoomByAbout(1, point);
+    // zoom em um passo
+    //map.zoomBy(1);
+    // percorre
+    //map.panBy(50, 50);
+
+
+    // adicionado separado o location e o zoom
     /*map.setCenter(new MM.Location(37.7749295, -122.4194155));
     map.setZoom(11);*/
     // adiciona um ponto de localização já com o zoom no final
-    map.setCenterZoom(new MM.Location(37.7749295, - 122.4194155), 14);
+    //map.setCenterZoom(new MM.Location(37.7749295, - 122.4194155), 14);
     // mostra uma taxa delimitadora de coordenadas ou conjunto de pontos  usando sextExtent
-    var locations = [
+    /*var locations = [
       new MM.Location(37.7749295, -122.4194155),
       new MM.Location(37.8043722, -122.2708026),
       new MM.Location(37.8715926, -122.272747)
     ];
-    map.setExtent(locations);
+    map.setExtent(locations);*/
 
     // Definir o tamanho do mapa usa assim também:
     /*map.setSize(new MM.Point(600,400));
@@ -71,7 +95,7 @@ private alert:AlertController;
   // Método dispatchCallback internamente para notificar os ouvintes sobre as mudanças.
     /*var info = document.getElementById('info');
     map.addCallback('drawn', function(m) {
-    // respond to new center:
+    // responde um novo centro
     info.innerHTML = m.getCenter().toString();
     }); */
 
@@ -95,9 +119,7 @@ private alert:AlertController;
   */
 
 
-  // Location latitude e longitude
 
-  //var loc = new com.modestmaps.Location(latitude, longitude);
 
   // Metodos de distancia e circular
   /*
