@@ -45,14 +45,17 @@ private alert:AlertController;
     // adicionar ao layer  o template para cabar dentro do escopo se não ele se expandirá pra fora
     var layer = new MM.Layer(template);
 
+
     // ja utiliza uma dimensão fixa pro mapa ou se quiser adiciona no css 100% largura e 100% altura
     //var dimensions = new MM.Point(900, 600);
     // cria o mapa com essas opçoes
     //var map = new MM.Map(parent, layer, dimensions);
-    var map = new MM.Map(parent, layer);
+    //var map = new MM.Map(parent, layer);
+    var map = new com.modestmaps.Map(parent, layer);
     // Location latitude e longitude
     var latitude = 37.7749295;
     var longitude = -122.4194155;
+
     var loc = new com.modestmaps.Location(latitude, longitude);
     map.setCenterZoom(loc, 14);
     var info = document.getElementById('map');
@@ -61,6 +64,24 @@ private alert:AlertController;
     });
     map.setZoomRange(10, 16);
     map.setZoom(12);
+
+
+    //var point = new com.modestmaps.Point(latitude, longitude);
+
+    /*
+    Point é um objeto de dados simples com propriedades x e y.
+    É mais usado para representar posições de pixel na tela ou no mapa.
+    */
+    var p1 = new com.modestmaps.Point(10, 20);
+    var p2 = new com.modestmaps.Point(20, 20);
+    var d = com.modestmaps.Point.distance(p1, p2);
+
+    //p3 está no meio do caminho entre p1 e p2:
+    var amount = 0.5;
+    var p3 = com.modestmaps.Point.interpolate(p1, p2, amount);
+    info.innerHTML="Distancia entre 2 pontos: "+d+" metros "+" interpolção de caminho"+
+    " entre os 2 pontos: "+p3;
+
 
     /*var location = new MM.Location(37.8715926, -122.272747);
     var point = map.locationPoint(location);*/
