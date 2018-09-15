@@ -14,6 +14,8 @@ import {
 } from '@ionic-native/google-maps';
 // Fim nativo
 import { HomePage } from '../home/home';
+import { HttpServiceProvider } from '../../providers/http-service/http-service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 // Essa variavel é do namespace da própria google api, tem que ser declarada
 declare var google:any;
@@ -24,11 +26,10 @@ declare var google:any;
   templateUrl: 'google-map.html',
 })
 export class GoogleMapPage{
-  public bus:Onibus;
+  private alert: AlertController;
+  public bus:Onibus[];
   public map:any;
   public marker:any;
-  public lat:any;
-  public lng:any;
   public lugar=[
   {
     "nome":"lugar 1",
@@ -43,16 +44,54 @@ export class GoogleMapPage{
 ];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private alert: AlertController,
-    private geolocation: Geolocation) {
-    this.bus = this.navParams.get("bus");
+    private geolocation: Geolocation, private apibus: HttpServiceProvider) {
   }
 
 
   ionViewDidEnter() {
     console.log("Entrou no DidEnter");
+    try {
       this.carregarMapa();
+      this.buscarLinhas();
 
+    } catch (error) {
+      this.alert.create({
+        title: "Alerta",
+        subTitle: "Ocorreu erro no Carregamento dos dados",
+        buttons: [{
+          text: "Confirmar",
+          handler: () => {
+            this.navCtrl.setRoot(HomePage);
+          }
+        }]
+      });
+    }
+
+
+  }
+
+  public buscarLinhas()
+  {
+    this.apibus.listaTodos()
+      .subscribe((onibus) => {
+        this.bus = onibus;
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err);
+        this.alert.create({
+          title: "Falha na conexão",
+          subTitle:
+            "Não foi possível carregar a lista de ônibus. Tente novamente mais tarde!",
+          buttons: [{
+            text: "Confirmar",
+            handler: () => {
+              this.navCtrl.setRoot(HomePage);
+            }
+          }]
+        })
+          .present();
+      }
+      );
   }
 
   public carregarMapa()
@@ -61,8 +100,7 @@ export class GoogleMapPage{
     this.geolocation.getCurrentPosition().then(result=>{
       //this.loadMap(result.coords.latitude,result.coords.longitude);
       this.carregaRota(result.coords.latitude, result.coords.longitude);
-      this.lat=result.coords.latitude;
-      this.lng=result.coords.longitude;
+
     }).catch(err=>{
       this.alert.create({
         title: "Alerta!!",
@@ -119,21 +157,7 @@ export class GoogleMapPage{
 
   }*/
 
-  public addinfowindow(marker,content)
-  {
-    console.log("Entrou na função addinfowindow");
-    let infowindow= new google.maps.InfoWindow({
-      content:content
-    });
-
-    google.maps.event.addListener(marker,"click",()=>{
-      // Isso faz quando clicar no marcador faz apareçer a descrição que foi enviado
-      infowindow.open(this.map,marker);
-    });
-
-  }
-
-  public loadPoints() {
+  /*public loadPoints() {
     console.log("Entrou na função loadPoints");
     this.marker = [];
 
@@ -155,16 +179,29 @@ export class GoogleMapPage{
       this.addinfowindow(marker, content);
       marker.setMap(this.map);
     }
+  }*/
+  public addinfowindow(marker, content) {
+    //console.log("Entrou na função addinfowindow");
+    let infowindow = new google.maps.InfoWindow({
+      content: content
+    });
+
+    google.maps.event.addListener(marker, "click", () => {
+      // Isso faz quando clicar no marcador faz apareçer a descrição que foi enviado
+      infowindow.open(this.map, marker);
+    });
+
   }
 
   public carregaRota(lat,lng)
   {
-    this.loadPoints();
+    //this.loadPoints();
+
     var directionService = new google.maps.DirectionsService();
     var directionDisplay = new google.maps.DirectionsRenderer();
-    var bounds = new google.maps.LatLngBounds();
+    //var bounds = new google.maps.LatLngBounds();
 
-    let latlng = new google.maps.LatLng(lat, lng);
+    let latlng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
 
     let mapOptions = {
       center: latlng,
@@ -183,7 +220,8 @@ export class GoogleMapPage{
       title: "Minha localização",
       icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
     });
-    marker.setMap(map);
+     marker.setMap(map);
+
 
     var content = '<div id="myId" class="item item-thumbnail-left item-text-wrap">' +
       '<ion-item>' +
@@ -198,7 +236,7 @@ export class GoogleMapPage{
     //let service = new google.maps.DistanceMatrixService;
 
 
-    var origem={lat:parseFloat(lat),lng:parseFloat(lng)};
+    //var origem={lat:parseFloat(lat),lng:parseFloat(lng)};
 
     // Configuração da direction request route da google api
     /* origin: LatLng | String | google.maps.Place,
@@ -215,17 +253,40 @@ export class GoogleMapPage{
         avoidTolls: Boolean,
         region: String */
 
-    var destination = new google.maps.LatLng(this.lugar[0].lat,this.lugar[0].lng);
+    //var destination = new google.maps.LatLng(this.lugar[0].lat,this.lugar[0].lng);
+
+    var lt =""+this.bus[0].rotas[0][0];
+    var lg =""+this.bus[0].rotas[0][1];
+    console.log("valor lt: "+lt);
+    console.log("valor lg: " + lg);
+      var dest = new google.maps.LatLng(
+        parseFloat(lt), parseFloat(lg)
+        );
+
+    var lt2 = "" + this.bus[0].rotas[22][0];
+    var lg2 = "" + this.bus[0].rotas[22][1];
+    console.log("valor lt2: " + lt2);
+    console.log("valor lg2: " + lg2);
+    var dest2 = new google.maps.LatLng(
+      parseFloat(lt2), parseFloat(lg2)
+    );
+
 
     const request={
       //oirigin pode ser uma coordenada(LatLng),uma string ou um lugar
-      origin: origem,
-      destination: destination,
+      // obrigatório por
+      origin: dest,
+
+      // obrigatório por
+      destination: dest2,
       // TravelModel Especifica o tipo de transporte a ser calculado
       travelMode:"TRANSIT",
       /*unitSystem:google.maps.UnitSystem.METRIC
       É utilizado para mostrar o calculado da rota mostrado em quilometros*/
       unitSystem: google.maps.UnitSystem.METRIC,
+
+      //opcional, especifica uma matriz de DirectionsWaypoints
+      //waypoints: destination,
       /*avoidHighways( opcional ) quando definido como
       true indica que a (s) rota (s) calculada (s) deve (m)
       evitar as principais rodovias, se possível. */
@@ -235,6 +296,8 @@ export class GoogleMapPage{
        estradas com portagem, se possível. */
       avoidTolls: false
     }
+
+
     var msg="";
     var resultlist=[];
     var markerArray=[];
@@ -247,7 +310,7 @@ export class GoogleMapPage{
       {
         case "OK":
           directionDisplay.setDirections(result);
-          map.fitBounds(bounds.extend(result));
+          //map.fitBounds(bounds.extend(result));
         break;
 
         case "NOT_FOUND":
@@ -294,8 +357,7 @@ export class GoogleMapPage{
           }]
         });
       }
-
-      if(status=="OK")
+      else if(status=="OK")
       {
         for(let i=0;i<resultlist.length;i++)
         {
@@ -309,6 +371,7 @@ export class GoogleMapPage{
       }
 
     });
+
 
     this.addinfowindow(marker, content);
 
