@@ -30,6 +30,7 @@ export class GoogleMapPage {
   //public bus:Onibus[];
   public map: any;
   public marker: any;
+  public bu:Onibus;
   public bus = {
     "linha": "VERA CRUZ SAO CRISTOVAO",
     "rotas": [
@@ -128,21 +129,10 @@ export class GoogleMapPage {
       [-28.259469135151996, -52.445640563964844]
     ]
   }
-  /*public lugar=[
-  {
-    "nome":"lugar 1",
-      "lat": -28.264988,
-      "lng": - 52.418995
-  },
-  {
-    "nome": "lugar 2",
-    "lat": -28.265800,
-    "lng": - 52.419381
-  }
-];*/
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private geolocation: Geolocation, private apibus: HttpServiceProvider) {
+    this.bu = this.navParams.get("bus");
   }
 
 

@@ -17,6 +17,7 @@ declare var com: any;
 })
 export class ModestMapsPage {
   public alert: AlertController;
+  public bu: Onibus;
   public bus = {
     "rotas": [
       [-28.280337621823495, -52.371343374252326],
@@ -114,6 +115,7 @@ export class ModestMapsPage {
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.bu = this.navParams.get("bus");
   }
 
   ionViewDidEnter() {

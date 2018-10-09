@@ -102,7 +102,18 @@ export class HomePage {
     this.navCtrl.push(LeafletMapPage, { bus });
   }
 
-  public mapa2() {
+  public mapa2(bus: Onibus) {
+    //console.log("Valor da rota bus: " + bus.linha);
+
+    this.navCtrl.push(GoogleMapPage, { bus });
+  }
+
+  public mapa(bus: Onibus) {
+    //console.log("Valor da rota bus: " + bus.linha);
+    this.navCtrl.push(ModestMapsPage, { bus });
+  }
+
+  /*public mapa2() {
     //console.log("Valor da rota bus: " + bus.linha);
 
     this.navCtrl.push(GoogleMapPage);
@@ -112,7 +123,7 @@ export class HomePage {
   {
     //console.log("Valor da rota bus: " + bus.linha);
     this.navCtrl.push(ModestMapsPage);
-  }
+  }*/
 
 
 }
