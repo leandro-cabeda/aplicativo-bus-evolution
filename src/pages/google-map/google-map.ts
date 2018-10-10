@@ -270,28 +270,28 @@ export class GoogleMapPage {
 
   public carregaRota(lat, lng) {
     //this.loadPoints();
-    var tam = this.bus.rotas.length;
-    var bu = this.bus.rotas;
-    var bu2 = this.bus2.rotas;
-    var bu3 = this.bus3.rotas;
+    //var tam = this.bus.rotas.length;
+    //var bu = this.bus.rotas;
+    //var bu2 = this.bus2.rotas;
+    //var bu3 = this.bus3.rotas;
     var directionService = new google.maps.DirectionsService();
     var directionDisplay = new google.maps.DirectionsRenderer();
     //var bounds = new google.maps.LatLngBounds();
 
-    let latlng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+    let latlng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng)); // pega coordenada da latitudo e longitude do ponto do usuário
 
-    let mapOptions = {
+    let mapOptions = {  // cria as opções para atribuir no mapa
       center: latlng,
       zoom: 16,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true // desativar as configurações padrões da interface do usuário ao api
     }
 
-    let element = document.getElementById("map");
+    let element = document.getElementById("map"); // pega o elemento do id do mapa e atribui pra variavel
 
-    var map = new google.maps.Map(element, mapOptions);
+    var map = new google.maps.Map(element, mapOptions); // Criar o mapa com elemento e a opção
 
-    var iconmod = function () {
+    var iconmod = function () { // variavel q atribui vários atributos para adicionar no Icon do marker
       return {
         fillColor: 'black',
         fillOpacity: .5,
@@ -301,7 +301,7 @@ export class GoogleMapPage {
       }
     }
 
-    var marker = new google.maps.Marker({
+    var marker = new google.maps.Marker({ // Cria o marcador da localização do usuário com as opções
       // position recebe a longitude e latitude de onde se encontra
       position: latlng,
       title: "Minha localização",
@@ -309,8 +309,10 @@ export class GoogleMapPage {
       icon: iconmod //"http://maps.google.com/mapfiles/ms/icons/green-dot.png"
     });
 
-    marker.setMap(map);
+    marker.setMap(map); // seta o marker no mapa
 
+
+    // cria um content atribuindi uma caixa de dialogo com titulo do marker em coortenação
     var content = '<div id="myId" class="item item-thumbnail-left item-text-wrap">' +
       '<ion-item>' +
       '<ion-row>' +
@@ -344,29 +346,52 @@ export class GoogleMapPage {
 
     //var destination = new google.maps.LatLng(this.lugar[0].lat,this.lugar[0].lng);
 
-    var lt = "" + bu3[0][0];
+    // Teste criado com os objetos separados para fazer a origim das coordenadas da rota
+    /*var lt = "" + bu3[0][0];
     var lg = "" + bu3[0][1];
     console.log("valor lt: " + lt);
     console.log("valor lg: " + lg);
     var dest = new google.maps.LatLng(
       parseFloat(lt), parseFloat(lg)
-    );
+    );*/
 
-    var lt2 = "" + bu3[25][0];
+    // Teste criado com os objetos separados para fazer o fim do destino das coordenadas da rota
+    /*var lt2 = "" + bu3[25][0];
     var lg2 = "" + bu3[25][1];
     console.log("valor lt2: " + lt2);
     console.log("valor lg2: " + lg2);
     var dest2 = new google.maps.LatLng(
       parseFloat(lt2), parseFloat(lg2)
-    );
+    );*/
 
+    // Testando com variavle recebendo matriz toda das coordenadas  e inicializando uma variavel rotas com um vetor vazio
+    var bu=this.bu.rotas;
+    console.log("Valor variavel bu: "+bu);
+    var or = new google.maps.LatLng(bu[0][0], bu[0][1]);
+    console.log("Valor da variavel  or: "+or);
+    var rotas=[];
+    console.log("Tamanho variavel rotas antes do push: " + rotas.length);
+    var i;
+
+    for(i=0;i<bu.length;i++)
+    {
+      if(i>0)
+      {
+        console.log("Entrou na condifção if do for");
+        rotas.push(bu[i][0],bu[i][1]);
+        //rotas.push(new google.maps.LatLng(bu[i][0], bu[i][1]));
+      }
+    }
+    console.log("Tamanho variavel rotas depois do push: "+rotas.length);
+
+    // Cria uma request com as configurações de origim e destino e outros para adicionar a DirectionService Route
     const request = {
       //oirigin pode ser uma coordenada(LatLng),uma string ou um lugar
       // obrigatório por
-      origin: dest,
+      origin: or,
 
       // obrigatório por
-      destination: dest2,
+      destination: rotas,
       // TravelModel Especifica o tipo de transporte a ser calculado
       travelMode: "DRIVING",
       /*unitSystem:google.maps.UnitSystem.METRIC

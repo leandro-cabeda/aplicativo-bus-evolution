@@ -161,11 +161,18 @@ export class ModestMapsPage {
     // Jeito de criar objetos com latitude e longitude
     //var loc = { lat: latitude, lon: longitude };
     // passando a variavel com zoom ja
-    var bu=[];
+   /* var bu=[];
 
     for(let i=0;i<this.bus3.rotas.length;i++)
     {
       bu.push(new MM.Location(this.bus3.rotas[i][0],this.bus3.rotas[i][1]));
+    }
+    */
+
+    var rotas=[];
+    var bu=this.bu.rotas;
+    for (let i = 0; i < bu.length; i++) {
+      rotas.push(new MM.Location(bu[i][0],bu[i][1]));
     }
 
     map.setExtent(bu);
