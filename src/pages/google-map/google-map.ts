@@ -30,7 +30,7 @@ export class GoogleMapPage {
   //public bus:Onibus[];
   public map: any;
   public marker: any;
-  public bu:Onibus;
+  public bu: Onibus;
   public bus = {
     "linha": "VERA CRUZ SAO CRISTOVAO",
     "rotas": [
@@ -63,7 +63,7 @@ export class GoogleMapPage {
     ]
   };
 
-  public bus2={
+  public bus2 = {
     "linha": "EDMUNDO TREIN SAO JOSE",
     "rotas": [
       [-28.237216569426966, -52.37420797348023],
@@ -96,7 +96,7 @@ export class GoogleMapPage {
 
   }
 
-  public bus3={
+  public bus3 = {
     "linha": "JERONIMO COELHO VIA JARDIM AMAERICA UPF UNIVERSIDADE",
     "rotas": [
       [-28.231393938463267, -52.381836175918586],
@@ -364,25 +364,21 @@ export class GoogleMapPage {
       parseFloat(lt2), parseFloat(lg2)
     );*/
 
-    // Testando com variavle recebendo matriz toda das coordenadas  e inicializando uma variavel rotas com um vetor vazio
-    var bu=this.bu.rotas;
-    console.log("Valor variavel bu: "+bu);
-    var or = new google.maps.LatLng(bu[0][0], bu[0][1]);
-    console.log("Valor da variavel  or: "+or);
-    var rotas=[];
-    console.log("Tamanho variavel rotas antes do push: " + rotas.length);
-    var i;
-
-    for(i=0;i<bu.length;i++)
-    {
-      if(i>0)
-      {
-        console.log("Entrou na condifção if do for");
-        rotas.push(bu[i][0],bu[i][1]);
-        //rotas.push(new google.maps.LatLng(bu[i][0], bu[i][1]));
+    // Testando com o objeto que tem conjuntos de rotas e atribui na variavel bu
+    var bu = this.bu.rotas;
+    console.log("Valor variavel bu: " + bu);
+    for (var i = 0; i < bu.length; i++) {
+      if (i == 0) {
+        var og = "" + bu[i][0];
+        var og2 = "" + bu[i][1];
+        var or = new google.maps.LatLng(parseFloat(og), parseFloat(og2));
+      }
+      if (i == bu.length - 1) {
+        var r = "" + bu[i][0];
+        var r2 = "" + bu[i][1];
+        var rot = new google.maps.LatLng(parseFloat(r), parseFloat(r2));
       }
     }
-    console.log("Tamanho variavel rotas depois do push: "+rotas.length);
 
     // Cria uma request com as configurações de origim e destino e outros para adicionar a DirectionService Route
     const request = {
@@ -391,7 +387,7 @@ export class GoogleMapPage {
       origin: or,
 
       // obrigatório por
-      destination: rotas,
+      destination: rot,
       // TravelModel Especifica o tipo de transporte a ser calculado
       travelMode: "DRIVING",
       /*unitSystem:google.maps.UnitSystem.METRIC
