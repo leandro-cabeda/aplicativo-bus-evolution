@@ -395,7 +395,10 @@ export class GoogleMapPage {
       unitSystem: google.maps.UnitSystem.METRIC,
 
       //opcional, especifica uma matriz de DirectionsWaypoints
-      //waypoints: destination,
+      waypoints: bu,
+
+      // Evitar as balsas se possiveis se for true
+      avoidFerries:false,
       /*avoidHighways( opcional ) quando definido como
       true indica que a (s) rota (s) calculada (s) deve (m)
       evitar as principais rodovias, se possível. */
