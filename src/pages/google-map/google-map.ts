@@ -291,7 +291,7 @@ export class GoogleMapPage {
 
     var map = new google.maps.Map(element, mapOptions); // Criar o mapa com elemento e a opção
 
-    var iconmod = function () { // variavel q atribui vários atributos para adicionar no Icon do marker
+    /*var iconmod = function () { // variavel q atribui vários atributos para adicionar no Icon do marker
       return {
         fillColor: 'black',
         fillOpacity: .5,
@@ -299,14 +299,14 @@ export class GoogleMapPage {
         strokeWeight: .8,
         draggable: true,
       }
-    }
+    }*/
 
     var marker = new google.maps.Marker({ // Cria o marcador da localização do usuário com as opções
       // position recebe a longitude e latitude de onde se encontra
       position: latlng,
       title: "Minha localização",
       map: map,
-      icon: iconmod //"http://maps.google.com/mapfiles/ms/icons/green-dot.png"
+      icon: "http://maps.google.com/mapfiles/ms/icons/green-dot.png"
     });
 
     marker.setMap(map); // seta o marker no mapa
@@ -365,9 +365,13 @@ export class GoogleMapPage {
     );*/
 
     // Testando com o objeto que tem conjuntos de rotas e atribui na variavel bu
-    var bu = this.bu.rotas;
+    var bu =this.bu.rotas;
+    var destinationIcon = 'https://chart.googleapis.com/chart?' +
+      'chst=d_map_pin_letter&chld=D|FF0000|000000';
+    var msg = "";
     console.log("Valor variavel bu: " + bu);
     for (var i = 0; i < bu.length; i++) {
+
       if (i == 0) {
         var og = "" + bu[i][0];
         var og2 = "" + bu[i][1];
@@ -395,7 +399,7 @@ export class GoogleMapPage {
       unitSystem: google.maps.UnitSystem.METRIC,
 
       //opcional, especifica uma matriz de DirectionsWaypoints
-      waypoints: bu,
+      //waypoints: ,
 
       // Evitar as balsas se possiveis se for true
       avoidFerries:false,
@@ -410,11 +414,8 @@ export class GoogleMapPage {
     }
 
 
-    var msg = "";
     //var resultlist = [];
     //var markerArray = [];
-    var destinationIcon = 'https://chart.googleapis.com/chart?' +
-      'chst=d_map_pin_letter&chld=D|FF0000|000000';
 
     directionService.route(request, (result, status) => {
       //resultlist.push(result);
@@ -477,13 +478,13 @@ export class GoogleMapPage {
           }));
         }
       }*/
-      var marker2 = new google.maps.Marker({
+      /*var marker2 = new google.maps.Marker({
         map: map,
-        position: result,
+        //position: result,
         icon: destinationIcon
-      });
+      });*/
 
-      marker2.setMap(map);
+      //marker2.setMap(map);
 
     });
 

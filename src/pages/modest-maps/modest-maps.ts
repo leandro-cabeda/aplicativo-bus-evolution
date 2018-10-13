@@ -175,7 +175,7 @@ export class ModestMapsPage {
       rotas.push(new MM.Location(bu[i][0],bu[i][1]));
     }
 
-    map.setExtent(bu);
+    map.setExtent(rotas);
     map.setZoomRange(12, 16);
     map.setZoom(14);
 
